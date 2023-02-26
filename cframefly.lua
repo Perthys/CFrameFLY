@@ -105,7 +105,7 @@ Maid:GiveTask(UserInputService.InputBegan:Connect(function(Input, GameProcessedE
 			end
 		elseif KeyBindStarted[Input.UserInputType] then
 			for _, Function in pairs(KeyBindStarted[Input.UserInputType]) do
-                task.spawn(Function)
+                		task.spawn(Function)
 			end
 		end
 	end
