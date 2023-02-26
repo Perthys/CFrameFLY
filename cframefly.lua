@@ -7,7 +7,9 @@ local Maid = loadstring(game:HttpGet('https://raw.githubusercontent.com/Quenty/N
 shared.Maid = shared.Maid or Maid.new(); local Maid = shared.Maid; Maid:DoCleaning();
 shared.Active = true;
 
-local Offset = 0.5;
+local Ignore = false
+
+local Offset = 4;
 
 local Camera = workspace.CurrentCamera;
 
@@ -67,55 +69,66 @@ local KeyBindStarted = {
     [Enum.KeyCode.Q] = {
         ["FLY_UP"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.Q) do
+                RunService.Stepped:Wait()
+                if Ignore then continue end;
                 
                 CurrentPoint = CurrentPoint * CFrame.new(0, Offset, 0)
-                RunService.Stepped:Wait()
             end
         end;
     };
     [Enum.KeyCode.E] = {
         ["FLY_DOWN"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.E) do
+                RunService.Stepped:Wait()
+                if Ignore then continue end;
                 
                 CurrentPoint = CurrentPoint * CFrame.new(0, -Offset, 0)
-                RunService.Stepped:Wait()
             end
         end;
     };
     [Enum.KeyCode.W] = {
         ["FLY_FORWARD"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.W) do
+                RunService.Stepped:Wait()
+                if Ignore then continue end;
                 
                 CurrentPoint = CurrentPoint * CFrame.new(0, 0, -Offset)
-                RunService.Stepped:Wait()
             end
         end;
     };
     [Enum.KeyCode.S] = {
         ["FLY_BACK"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.S) do
+                RunService.Stepped:Wait()
+                if Ignore then continue end;
                 
                 CurrentPoint = CurrentPoint * CFrame.new(0, 0, Offset)
-                RunService.Stepped:Wait()
             end
         end;
     };
     [Enum.KeyCode.A] = {
         ["FLY_LEFT"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.A) do
-                
-                CurrentPoint = CurrentPoint * CFrame.new(-Offset, 0, 0)
                 RunService.Stepped:Wait()
+                if Ignore then continue end;
+
+                CurrentPoint = CurrentPoint * CFrame.new(-Offset, 0, 0)
             end
         end;
     };
     [Enum.KeyCode.D] = {
         ["FLY_RIGHT"] = function()
             while UserInputService:IsKeyDown(Enum.KeyCode.D) do
+                RunService.Stepped:Wait()
+                if Ignore then continue end;
                 
                 CurrentPoint = CurrentPoint * CFrame.new(Offset, 0, 0)
-                RunService.Stepped:Wait()
             end
+        end;
+    };
+    [Enum.KeyCode.Space] = {
+        ["IGNORE_ON"] = function()
+            Ignore = true
         end;
     };
     [Enum.KeyCode.Equals] = {
@@ -157,7 +170,11 @@ local KeyBindStarted = {
 }
 
 local KeyBindEnded = {
-   
+    [Enum.KeyCode.Space] = {
+        ["IGNORE_OFF"] = function()
+            Ignore = false
+        end;
+    };
 }
 
 Maid:GiveTask(UserInputService.InputBegan:Connect(function(Input, GameProcessedEvent)
