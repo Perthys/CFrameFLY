@@ -24,7 +24,6 @@ end))
 
 Maid:GiveTask(RunService.Stepped:Connect(function()
     if shared.Active then
-        local Humanoid = Character:FindFirstChild("Humanoid") if not Humanoid then return end
         local CameraCFrame = Camera.CFrame
         
         CurrentPoint = CFrame.new(CurrentPoint.Position, CurrentPoint.Position + CameraCFrame.LookVector)
